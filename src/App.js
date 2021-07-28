@@ -7,22 +7,34 @@ import {
 } from 'react-router-dom'
 import Login from './pages/Login'
 import { useState, useEffect } from 'react'
+import { getCookie, setCookie, eraseCookie } from './cookies'
 
 export default function App() {
 
   const [Tokens, setTokens] = useState({})
   const getTokens = tokens => setTokens(tokens)
-
-  useEffect(_ => console.log('Tokens received:', Tokens), [Tokens])
+  console.log('COOKIE', document.cookie)
 
   useEffect(_ => {
-    const tokens = JSON.parse(document.cookie)
-    if (tokens.accessToken) setTokens(tokens)
+    const cookie = getCookie('aap')
+    if (!cookie) {
+      setCookie('aap', JSON.stringify(Tokens))
+    }
+    const tokens = JSON.parse(cookie)
+    console.log('tokens', tokens)
+    if (tokens) setTokens(tokens)
   }, [])
 
-  if (!Tokens.accessToken) return <Login getTokens={getTokens} />
+  useEffect(_ => {
+    console.log(Tokens)
+    if (Tokens.accessToken) {
+      setCookie('aap', JSON.stringify(Tokens))
+    }
+  }, [Tokens])
 
-  document.cookie = JSON.stringify({ accessToken: Tokens.accessToken })
+  // document.cookie = JSON.stringify({ accessToken: Tokens.accessToken })
+
+  if (!Tokens.accessToken) return <Login getTokens={getTokens} />
 
   const Logout = async () => {
     try {
@@ -36,8 +48,8 @@ export default function App() {
     } catch(err) {
       console.log(err.message)
     }
+    eraseCookie('aap')
     setTokens({})
-    document.cookie = JSON.stringify({})
   }
 
   return (
@@ -61,9 +73,9 @@ export default function App() {
         </nav>
 
         <Switch>
-          <Route path='/login'>
+          {/* <Route path='/login'>
             <Login getTokens={getTokens} />
-          </Route>
+          </Route> */}
           <Route path='/about'>
             <About />
           </Route>
