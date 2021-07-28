@@ -10,20 +10,14 @@ import { useState, useEffect } from 'react'
 
 export default function App() {
 
-  console.log(document.cookie)
-
   const [Tokens, setTokens] = useState({})
   const getTokens = tokens => setTokens(tokens)
 
-  useEffect(_ => {
-    console.log('AAP', Tokens)
-  }, [Tokens])
+  useEffect(_ => console.log('Tokens received:', Tokens), [Tokens])
 
   useEffect(_ => {
     const tokens = JSON.parse(document.cookie)
-    if (tokens.accessToken) {
-      setTokens(tokens)
-    }
+    if (tokens.accessToken) setTokens(tokens)
   }, [])
 
   if (!Tokens.accessToken) return <Login getTokens={getTokens} />
@@ -40,7 +34,7 @@ export default function App() {
         }
       })  
     } catch(err) {
-      console.log('AAAp', err)
+      console.log(err.message)
     }
     setTokens({})
     document.cookie = JSON.stringify({})
@@ -96,4 +90,3 @@ function About() {
 function Users() {
   return <h2>Users</h2>
 }
-
