@@ -16,9 +16,9 @@ export default function App() {
   console.log('COOKIE', document.cookie)
 
   useEffect(_ => {
-    const cookie = getCookie('aap')
+    const cookie = getCookie('tokens')
     if (!cookie) {
-      setCookie('aap', JSON.stringify(Tokens))
+      setCookie('tokens', JSON.stringify(Tokens))
     }
     const tokens = JSON.parse(cookie)
     console.log('tokens', tokens)
@@ -28,11 +28,9 @@ export default function App() {
   useEffect(_ => {
     console.log(Tokens)
     if (Tokens.accessToken) {
-      setCookie('aap', JSON.stringify(Tokens))
+      setCookie('tokens', JSON.stringify(Tokens))
     }
   }, [Tokens])
-
-  // document.cookie = JSON.stringify({ accessToken: Tokens.accessToken })
 
   if (!Tokens.accessToken) return <Login getTokens={getTokens} />
 
@@ -48,7 +46,7 @@ export default function App() {
     } catch(err) {
       console.log(err.message)
     }
-    eraseCookie('aap')
+    eraseCookie('tokens')
     setTokens({})
   }
 
@@ -73,9 +71,6 @@ export default function App() {
         </nav>
 
         <Switch>
-          {/* <Route path='/login'>
-            <Login getTokens={getTokens} />
-          </Route> */}
           <Route path='/about'>
             <About />
           </Route>
