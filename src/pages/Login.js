@@ -4,6 +4,7 @@ export default function Login({getTokens}) {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [err, setErr] = useState(false)
 
     const onChangeUsername = evt => setUsername(evt.target.value)
     const onChangePassword = evt => setPassword(evt.target.value)
@@ -20,6 +21,7 @@ export default function Login({getTokens}) {
             })
         })
         const tokens = await rawResponse.json()
+        if (tokens.error) setErr(true)
         tokens.username = username
         getTokens(tokens)
     }
@@ -27,6 +29,7 @@ export default function Login({getTokens}) {
     return (
         <div>
             <h2>login page</h2>
+            {err ? <h2>error</h2> : null}
             <input value={username} type='text' onChange={onChangeUsername} />
             <input value={password} type='password' onChange={onChangePassword} />
             <button onClick={onLogin}>login</button>
