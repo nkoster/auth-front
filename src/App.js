@@ -12,6 +12,7 @@ import { getCookie, setCookie, eraseCookie } from './cookies'
 export default function App() {
 
   const [Tokens, setTokens] = useState({})
+
   const getTokens = tokens => setTokens(tokens)
 
   useEffect(_ => {
@@ -52,6 +53,7 @@ export default function App() {
     <Router>
       <div>
         <nav>
+          {Tokens.username}
           <ul>
             <li>
               <Link to='/'>Home</Link>
