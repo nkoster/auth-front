@@ -35,12 +35,15 @@ export default function App() {
 
   const Logout = async () => {
     try {
-      await fetch('http://localhost:3011/logout', {
+      await fetch('https://auth.w3b.net/logout', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          username: Tokens.username
+        })
       })  
     } catch(err) {
       console.log(err.message)
