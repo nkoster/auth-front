@@ -21,6 +21,7 @@ export default function App() {
     }
     const tokens = JSON.parse(cookie)
     if (tokens) setTokens(tokens)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(_ => {
