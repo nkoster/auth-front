@@ -18,7 +18,7 @@ export default function App() {
   useEffect(_ => {
     const cookie = getCookie('tokens')
     if (!cookie) {
-      setCookie('tokens', JSON.stringify(Tokens))
+      setCookie('tokens', JSON.stringify(Tokens), 1800)
     }
     const tokens = JSON.parse(cookie)
     if (tokens) setTokens(tokens)
@@ -27,7 +27,7 @@ export default function App() {
 
   useEffect(_ => {
     if (Tokens.accessToken) {
-      setCookie('tokens', JSON.stringify(Tokens))
+      setCookie('tokens', JSON.stringify(Tokens), 1800)
     }
   }, [Tokens])
 
@@ -56,7 +56,7 @@ export default function App() {
     <Router>
       <div>
         <nav>
-          {Tokens.username}
+          {Tokens.username} [{Tokens.group}]
           <ul>
             <li>
               <Link to='/'>Home</Link>
