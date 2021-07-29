@@ -13,7 +13,6 @@ export default function App() {
 
   const [Tokens, setTokens] = useState({})
   const getTokens = tokens => setTokens(tokens)
-  console.log('COOKIE', document.cookie)
 
   useEffect(_ => {
     const cookie = getCookie('tokens')
@@ -21,12 +20,10 @@ export default function App() {
       setCookie('tokens', JSON.stringify(Tokens))
     }
     const tokens = JSON.parse(cookie)
-    console.log('tokens', tokens)
     if (tokens) setTokens(tokens)
   }, [])
 
   useEffect(_ => {
-    console.log(Tokens)
     if (Tokens.accessToken) {
       setCookie('tokens', JSON.stringify(Tokens))
     }
