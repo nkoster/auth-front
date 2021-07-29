@@ -9,7 +9,7 @@ export default function Login({getTokens}) {
     const onChangePassword = evt => setPassword(evt.target.value)
 
     const onLogin = async _ => {
-        const rawResponse = await fetch('http://localhost:3011/login', {
+        const rawResponse = await fetch('https://auth.w3b.net/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -19,7 +19,8 @@ export default function Login({getTokens}) {
                 username, password
             })
         })
-        const tokens = await rawResponse.json();
+        const tokens = await rawResponse.json()
+        tokens.username = username
         getTokens(tokens)
     }
 
